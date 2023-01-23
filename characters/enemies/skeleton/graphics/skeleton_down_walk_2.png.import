@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/playerGrey_walk2.png-5038e50c90b542ada1028a70e0ae39d0.stex"
+path="res://.import/skeleton_down_walk_2.png-7b72b4cb004e5565ebc978fd5eeb014a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/player/playerGrey_walk2.png"
-dest_files=[ "res://.import/playerGrey_walk2.png-5038e50c90b542ada1028a70e0ae39d0.stex" ]
+source_file="res://characters/enemies/skeleton/graphics/skeleton_down_walk_2.png"
+dest_files=[ "res://.import/skeleton_down_walk_2.png-7b72b4cb004e5565ebc978fd5eeb014a.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
