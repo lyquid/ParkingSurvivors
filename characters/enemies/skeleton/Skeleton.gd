@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal death
+
 # Node references
 var player
 
@@ -14,6 +16,8 @@ var bounce_countdown = 0
 
 # Animation variables
 var other_animation_playing = false
+
+export var health: float = 100.0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -91,4 +95,22 @@ func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == "birth":
 		$AnimatedSprite.animation = "down_idle"
 		$Timer.start()
+	elif $AnimatedSprite.animation == "death":
+		get_tree().queue_delete(self)
 	other_animation_playing = false
+
+
+func hit(damage: float):
+	health -= damage
+	if health > 0:
+		$AnimationPlayer.play("hit")
+	else:
+		$Timer.stop()
+		velocity = Vector2.ZERO
+		# The set_process() function is used to enable/disable the _process() 
+		# function call at each frame. We disable it, to prevent the regeneration of skeleton’s health.
+		#set_process(false)
+		other_animation_playing = true
+		$AnimatedSprite.play("death")
+		$CollisionShape2D.disabled = true
+		emit_signal("death")

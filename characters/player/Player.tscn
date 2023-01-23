@@ -19,6 +19,7 @@ extents = Vector2( 12, 17 )
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 script = ExtResource( 1 )
+attack_damage = 80.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
@@ -39,3 +40,12 @@ margin_left = -16.0
 margin_top = 18.0
 margin_right = 16.0
 margin_bottom = 21.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

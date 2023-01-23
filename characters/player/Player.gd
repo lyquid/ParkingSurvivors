@@ -9,6 +9,10 @@ var healthbar_length: float
 # directional vector
 var velocity: Vector2
 
+# attack stuff
+export var attack_damage: float = 100.0
+export var attack_length: float = 50.0
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,6 +44,10 @@ func _physics_process(delta):
 		$AnimatedSprite.stop()
 
 	var _move_result = move_and_collide(speed * velocity * delta)
+	
+	# raycast for attacking
+	if velocity != Vector2.ZERO:
+		$RayCast2D.cast_to = velocity.normalized() * attack_length
 
 
 func _process(delta):
@@ -58,3 +66,15 @@ func _process(delta):
 
 func update_healthbar():
 	$HealthBar/Inside.rect_size.x = healthbar_length * health / max_health
+
+
+func attack():
+	var target = $RayCast2D.get_collider()
+	if target != null:
+		if target.name.find("Skeleton") >= 0:
+			# Skeleton hit!
+			target.hit(attack_damage)
+
+
+func _on_Timer_timeout():
+	attack()

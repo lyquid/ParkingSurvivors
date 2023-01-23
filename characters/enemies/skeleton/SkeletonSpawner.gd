@@ -6,8 +6,8 @@ var tree_tilemap
 
 # Spawner variables
 export var spawn_area: Rect2 = Rect2(50, 150, 700, 700)
-export var max_skeletons = 40
-export var start_skeletons = 10
+export var max_skeletons: int = 40
+export var start_skeletons: int = 10
 var skeleton_count = 0
 var skeleton_scene = preload("res://characters/enemies/skeleton/Skeleton.tscn")
 
@@ -33,6 +33,8 @@ func instance_skeleton():
 	# Instance the skeleton scene and add it to the scene tree
 	var skeleton = skeleton_scene.instance()
 	add_child(skeleton)
+	# Connect Skeleton's death signal to the spawner
+	skeleton.connect("death", self, "_on_Skeleton_death")
 	
 	# Place the skeleton in a valid position
 	var valid_position = false
@@ -65,3 +67,7 @@ func _on_Timer_timeout():
 	if skeleton_count < max_skeletons:
 		instance_skeleton()
 		skeleton_count += 1
+
+
+func _on_Skeleton_death():
+	skeleton_count -= 1
