@@ -10,7 +10,7 @@ var rng = RandomNumberGenerator.new()
 
 # Movement variables
 export var speed = 40
-var velocity: Vector2
+var direction: Vector2
 var last_direction = Vector2(0, 1)
 var bounce_countdown = 0
 
@@ -28,22 +28,22 @@ func _ready():
 
 
 func _physics_process(delta):
-	var collision = move_and_collide(speed * velocity * delta)
+	var collision = move_and_collide(speed * direction * delta)
 
 	if collision != null and collision.collider.name != "Player" and collision.collider.name != "Skeleton":
-		velocity = velocity.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
+		direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
 		bounce_countdown = rng.randi_range(2, 4)
-		
+
 	# Animate skeleton based on direction
 	if not other_animation_playing:
-		animates_monster(velocity)
+		animates_monster(direction)
 
 
 func _on_Timer_timeout():
 	# Calculate the position of the player relative to the skeleton
 	var player_relative_position = player.position - position
 
-	velocity = player_relative_position.normalized()
+	direction = player_relative_position.normalized()
 
 #	if player_relative_position.length() <= 16:
 #		# If player is near, don't move but turn toward it
@@ -58,8 +58,8 @@ func _on_Timer_timeout():
 		bounce_countdown = bounce_countdown - 1
 
 
-func get_animation_direction(direction: Vector2):
-	var norm_direction = direction.normalized()
+func get_animation_direction(direction_in: Vector2):
+	var norm_direction = direction_in.normalized()
 	if norm_direction.y >= 0.707:
 		return "down"
 	elif norm_direction.y <= -0.707:
@@ -71,13 +71,13 @@ func get_animation_direction(direction: Vector2):
 	return "down"
 
 
-func animates_monster(direction: Vector2):
-	if velocity != Vector2.ZERO:
-		last_direction = direction
-		
+func animates_monster(direction_in: Vector2):
+	if direction_in != Vector2.ZERO:
+		last_direction = direction_in
+
 		# Choose walk animation based on movement direction
 		var animation = get_animation_direction(last_direction) + "_walk"
-		
+
 		# Play the walk animation
 		$AnimatedSprite.play(animation)
 	else:
@@ -106,8 +106,8 @@ func hit(damage: float):
 		$AnimationPlayer.play("hit")
 	else:
 		$Timer.stop()
-		velocity = Vector2.ZERO
-		# The set_process() function is used to enable/disable the _process() 
+		direction = Vector2.ZERO
+		# The set_process() function is used to enable/disable the _process()
 		# function call at each frame. We disable it, to prevent the regeneration of skeleton’s health.
 		#set_process(false)
 		other_animation_playing = true
