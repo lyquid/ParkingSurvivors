@@ -18,8 +18,8 @@ export var attack_length: float = 50.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	healthbar_length = $HealthBar/Inside.rect_size.x
-	$Area2D/CollisionShape2D.shape.extents.x = attack_length
-	$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
+	$AttackArea/CollisionShape2D.shape.extents.x = attack_length
+	$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 	update_healthbar()
 
 
@@ -40,10 +40,10 @@ func _physics_process(_delta):
 
 	# move the area2d to the corresponding side
 	if direction.x > 0:
-		$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
+		$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 		facing_left = false
 	elif direction.x < 0:
-		$Area2D.set_transform(Transform2D(0.0, Vector2(-$Area2D/CollisionShape2D.shape.extents.x, 0.0)))
+		$AttackArea.set_transform(Transform2D(0.0, Vector2(-$AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 		facing_left = true
 
 
@@ -66,7 +66,7 @@ func update_healthbar():
 
 
 func attack():
-	var bodies = $Area2D.get_overlapping_bodies()
+	var bodies = $AttackArea.get_overlapping_bodies()
 	for body in bodies:
 		if body.name.find("Skeleton") >= 0:
 			# Skeleton hit!
@@ -77,7 +77,16 @@ func attack():
 #				$Area2D.set_transform(Transform2D(0.0, Vector2(-$Area2D/CollisionShape2D.shape.extents.x, 0.0)))
 #			else:
 #				$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
-
+	#$ColorRect.visible = true
+	#$AttackFlashTimer.start()
 
 func _on_Timer_timeout():
 	attack()
+	
+
+#func _on_AttackFlashTimer_timeout
+
+
+#func _on_AttackFlashTimer_timeout():
+	#$AttackFlashTimer.stop()
+	#$ColorRect.visible = false

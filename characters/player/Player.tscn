@@ -46,14 +46,14 @@ margin_top = 18.0
 margin_right = 16.0
 margin_bottom = 21.0
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.75
 autostart = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="."]
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource( 3 )
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_Timer_timeout"]
