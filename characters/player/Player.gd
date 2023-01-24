@@ -5,32 +5,25 @@ export var speed: float = 50.0
 export var max_health: float = 100.0
 var health: float = 100.0
 var health_regen: float = 1.0
-var healthbar_length: float
+var healthbar_length: float = 0.0
 # directional vector
-var velocity: Vector2
+var velocity: Vector2 = Vector2.ZERO
+var facing_left: bool = false
 
 # attack stuff
-export var attack_damage: float = 100.0
+export var attack_damage: float = 80.0
 export var attack_length: float = 50.0
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	healthbar_length = $HealthBar/Inside.rect_size.x
+	$Area2D/CollisionShape2D.shape.extents.x = attack_length
+	$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
 	update_healthbar()
 
 
-func _physics_process(delta):
-	# velocity = Vector2.ZERO
-
-	# if Input.is_action_pressed("move_right"):
-	# 	velocity.x = 1
-	# if Input.is_action_pressed("move_left"):
-	# 	velocity.x = -1
-	# if Input.is_action_pressed("move_up"):
-	# 	velocity.y = -1
-	# if Input.is_action_pressed("move_down"):
-	# 	velocity.y = 1
+func _physics_process(_delta):
 	velocity.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	velocity.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 
@@ -43,11 +36,15 @@ func _physics_process(delta):
 	else:
 		$AnimatedSprite.stop()
 
-	var _move_result = move_and_collide(speed * velocity * delta)
-	
-	# raycast for attacking
-	if velocity != Vector2.ZERO:
-		$RayCast2D.cast_to = velocity.normalized() * attack_length
+	var _move_result = move_and_slide(speed * velocity)
+
+	# move the area2d to the corresponding side
+	if velocity.x > 0:
+		$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
+		facing_left = false
+	elif velocity.x < 0:
+		$Area2D.set_transform(Transform2D(0.0, Vector2(-$Area2D/CollisionShape2D.shape.extents.x, 0.0)))
+		facing_left = true
 
 
 func _process(delta):
@@ -69,11 +66,17 @@ func update_healthbar():
 
 
 func attack():
-	var target = $RayCast2D.get_collider()
-	if target != null:
-		if target.name.find("Skeleton") >= 0:
+	var bodies = $Area2D.get_overlapping_bodies()
+	for body in bodies:
+		if body.name.find("Skeleton") >= 0:
 			# Skeleton hit!
-			target.hit(attack_damage)
+			body.hit(attack_damage)
+#			attack_length += 1
+#			$Area2D/CollisionShape2D.shape.extents.x = attack_length
+#			if facing_left:
+#				$Area2D.set_transform(Transform2D(0.0, Vector2(-$Area2D/CollisionShape2D.shape.extents.x, 0.0)))
+#			else:
+#				$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
 
 
 func _on_Timer_timeout():
