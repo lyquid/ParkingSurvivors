@@ -92,3 +92,13 @@ func _on_Timer_timeout():
 
 func _on_ShowTimer_timeout():
 	$Weapon.visible = false
+
+
+func hit(damage):
+	health -= damage
+	update_healthbar()
+	#emit_signal("player_stats_changed", self)
+	if health <= 0:
+		pass
+	else:
+		$AnimationPlayer.play("hit")

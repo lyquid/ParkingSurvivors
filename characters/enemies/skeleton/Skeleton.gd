@@ -9,15 +9,17 @@ var player
 var rng = RandomNumberGenerator.new()
 
 # Movement variables
-export var speed = 40
+export var speed := 40.0
 var direction: Vector2
-var last_direction = Vector2(0, 1)
-var bounce_countdown = 0
+var last_direction := Vector2(0, 1)
+var bounce_countdown := 0
 
 # Animation variables
 var other_animation_playing = false
 
+# health and damage
 export var health: float = 100.0
+export var damage: float = 0.2
 
 
 # Called when the node enters the scene tree for the first time.
@@ -30,9 +32,16 @@ func _ready():
 func _physics_process(delta):
 	var collision = move_and_collide(speed * direction * delta)
 
-	if collision != null and collision.collider.name != "Player" and collision.collider.name != "Skeleton":
-		direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
-		bounce_countdown = rng.randi_range(2, 4)
+	if collision != null:
+		if collision.collider.name == "Player":
+			player.hit(damage)
+		elif collision.collider.name != "Skeleton":
+			direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
+			bounce_countdown = rng.randi_range(2, 4)
+		
+#	if collision != null and collision.collider.name != "Player" and collision.collider.name != "Skeleton":
+#		direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
+#		bounce_countdown = rng.randi_range(2, 4)
 
 	# Animate skeleton based on direction
 	if not other_animation_playing:
@@ -100,8 +109,8 @@ func _on_AnimatedSprite_animation_finished():
 	other_animation_playing = false
 
 
-func hit(damage: float):
-	health -= damage
+func hit(damage_in: float):
+	health -= damage_in
 	if health > 0:
 		$AnimationPlayer.play("hit")
 	else:
