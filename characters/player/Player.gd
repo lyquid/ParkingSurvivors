@@ -20,6 +20,7 @@ func _ready():
 	healthbar_length = $HealthBar/Inside.rect_size.x
 	$AttackArea/CollisionShape2D.shape.extents.x = attack_length
 	$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
+	$Weapon.set_size(Vector2(attack_length * 2.0, 5.0))
 	update_healthbar()
 
 
@@ -77,16 +78,17 @@ func attack():
 #				$Area2D.set_transform(Transform2D(0.0, Vector2(-$Area2D/CollisionShape2D.shape.extents.x, 0.0)))
 #			else:
 #				$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
-	#$ColorRect.visible = true
-	#$AttackFlashTimer.start()
+	$Weapon/ShowTimer.start()
+	if facing_left:
+		$Weapon.set_position(Vector2(-$Weapon.get_rect().size.x, 0.0))
+	else:
+		$Weapon.set_position(Vector2.ZERO)
+	$Weapon.visible = true
+
 
 func _on_Timer_timeout():
 	attack()
-	
-
-#func _on_AttackFlashTimer_timeout
 
 
-#func _on_AttackFlashTimer_timeout():
-	#$AttackFlashTimer.stop()
-	#$ColorRect.visible = false
+func _on_ShowTimer_timeout():
+	$Weapon.visible = false

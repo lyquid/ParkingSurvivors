@@ -47,7 +47,6 @@ margin_right = 16.0
 margin_bottom = 21.0
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.75
 autostart = true
 
 [node name="AttackArea" type="Area2D" parent="."]
@@ -56,4 +55,15 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource( 3 )
 
+[node name="Weapon" type="ColorRect" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 6.0
+color = Color( 0.960784, 0.0784314, 0.0352941, 1 )
+
+[node name="ShowTimer" type="Timer" parent="Weapon"]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="timeout" from="AttackTimer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Weapon/ShowTimer" to="." method="_on_ShowTimer_timeout"]
