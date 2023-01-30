@@ -60,7 +60,7 @@ __meta__ = {
 margin_left = -16.0
 margin_top = 18.0
 margin_right = 16.0
-margin_bottom = 21.0
+margin_bottom = 22.0
 
 [node name="AttackTimer" type="Timer" parent="."]
 autostart = true
