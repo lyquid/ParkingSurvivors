@@ -36,19 +36,28 @@ func _physics_process(delta):
 	if stunned:
 		collision = move_and_collide(impact_direction * delta)
 	else:
+#		move_and_slide(speed * direction)
+#		for i in get_slide_count():
+#			collision = get_slide_collision(i)
+#			if collision != null:
+#				if collision.collider.name == "Player":
+#					player.hit(damage)
+##				elif "Skeleton" in collision.collider.name:
+##					direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
+##					bounce_countdown = 1
+#				else:
+#					direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
+#					bounce_countdown = rng.randi_range(2, 4)
 
+		# old movement
 		collision = move_and_collide(speed * direction * delta)
-
 		if collision != null:
+			#print("I collided with ", collision.collider.name)
 			if collision.collider.name == "Player":
 				player.hit(damage)
-			elif collision.collider.name != "Skeleton":
+			else:
 				direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
 				bounce_countdown = rng.randi_range(2, 4)
-
-	#	if collision != null and collision.collider.name != "Player" and collision.collider.name != "Skeleton":
-	#		direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
-	#		bounce_countdown = rng.randi_range(2, 4)
 
 		# Animate skeleton based on direction
 		if not other_animation_playing:
