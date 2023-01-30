@@ -37,7 +37,7 @@ func _physics_process(_delta):
 	else:
 		$AnimatedSprite.stop()
 
-	var _move_result = move_and_slide(speed * direction)
+	var _move_result := move_and_slide(speed * direction)
 
 	# move the area2d to the corresponding side
 	if direction.x > 0:
@@ -54,7 +54,6 @@ func _process(delta):
 		$AnimatedSprite.animation = "walk"
 		$AnimatedSprite.flip_v = false
 		$AnimatedSprite.flip_h = direction.x < 0
-
 	# health update
 	var new_health = min(health + health_regen * delta, max_health)
 	if new_health != health:
