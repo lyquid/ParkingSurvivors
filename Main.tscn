@@ -19,6 +19,3 @@ tile_data = PoolIntArray( -7536793, 4, 0, -7536792, 4, 0, -7471259, 4, 0, -74712
 scale = Vector2( 0.5, 0.5 )
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 4 )]
-__meta__ = {
-"_edit_group_": true
-}

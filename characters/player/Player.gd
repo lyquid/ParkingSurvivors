@@ -1,18 +1,19 @@
 extends KinematicBody2D
 
 # How fast the player will move (pixels/sec).
-export var speed: float = 50.0
-export var max_health: float = 100.0
-var health: float = 100.0
-var health_regen: float = 1.0
-var healthbar_length: float = 0.0
+export var speed := 50.0
+export var max_health := 100.0
+var health := 100.0
+var health_regen := 1.0
+var healthbar_length := 0.0
 # directional vector
-var direction: Vector2 = Vector2.ZERO
-var facing_left: bool = false
+var direction := Vector2.ZERO
+var facing_left := false
 
 # attack stuff
-export var attack_damage: float = 80.0
-export var attack_length: float = 50.0
+export var attack_damage := 80.0
+export var attack_length := 50.0
+export var attack_kinematic_force := 25.0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -29,10 +30,10 @@ func _physics_process(_delta):
 	direction.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 
 	# If input is digital, normalize it for diagonal movement
-	if abs(direction.x) == 1 and abs(direction.y) == 1:
+	if abs(direction.x) == 1.0 and abs(direction.y) == 1.0:
 		direction = direction.normalized()
 
-	if direction.length_squared() > 0:
+	if direction.length_squared() > 0.0:
 		$AnimatedSprite.play()
 	else:
 		$AnimatedSprite.stop()
@@ -40,20 +41,20 @@ func _physics_process(_delta):
 	var _move_result := move_and_slide(speed * direction)
 
 	# move the area2d to the corresponding side
-	if direction.x > 0:
+	if direction.x > 0.0:
 		$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 		facing_left = false
-	elif direction.x < 0:
+	elif direction.x < 0.0:
 		$AttackArea.set_transform(Transform2D(0.0, Vector2(-$AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 		facing_left = true
 
 
 func _process(delta):
 	# sprite flip
-	if direction.x != 0:
+	if direction.x != 0.0:
 		$AnimatedSprite.animation = "walk"
 		$AnimatedSprite.flip_v = false
-		$AnimatedSprite.flip_h = direction.x < 0
+		$AnimatedSprite.flip_h = direction.x < 0.0
 	# health update
 	var new_health = min(health + health_regen * delta, max_health)
 	if new_health != health:
@@ -70,7 +71,12 @@ func attack():
 	for body in bodies:
 		if body.name.find("Skeleton") >= 0:
 			# Skeleton hit!
-			body.hit(attack_damage)
+			var impact_direction: Vector2
+			if facing_left:
+				impact_direction = Vector2(-attack_kinematic_force, 0.0)
+			else:
+				impact_direction = Vector2(attack_kinematic_force, 0.0)
+			body.hit(attack_damage, impact_direction)
 #			attack_length += 1
 #			$Area2D/CollisionShape2D.shape.extents.x = attack_length
 #			if facing_left:
@@ -98,6 +104,6 @@ func hit(damage):
 	update_healthbar()
 	$AnimationPlayer.play("hit")
 	$HitParticles.emitting = true
-	if health <= 0:
+	if health <= 0.0:
 		# die!
 		pass

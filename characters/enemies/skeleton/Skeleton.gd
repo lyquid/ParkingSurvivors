@@ -3,23 +3,25 @@ extends KinematicBody2D
 signal death
 
 # Node references
-var player
+var player: Node2D
 
 # Random number generator
-var rng = RandomNumberGenerator.new()
+var rng := RandomNumberGenerator.new()
 
 # Movement variables
 export var speed := 20.0
-var direction: Vector2
-var last_direction := Vector2(0, 1)
+var direction := Vector2.ZERO
+var last_direction := Vector2(0.0, 1.0)
 var bounce_countdown := 0
 
 # Animation variables
-var other_animation_playing = false
+var other_animation_playing := false
 
 # health and damage
-export var health: float = 100.0
-export var damage: float = 0.2
+export var health := 100.0
+export var damage := 0.2
+var impact_direction := Vector2.ZERO
+var stunned := false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -30,22 +32,27 @@ func _ready():
 
 
 func _physics_process(delta):
-	var collision = move_and_collide(speed * direction * delta)
+	var collision: KinematicCollision2D
+	if stunned:
+		collision = move_and_collide(impact_direction * delta)
+	else:
 
-	if collision != null:
-		if collision.collider.name == "Player":
-			player.hit(damage)
-		elif collision.collider.name != "Skeleton":
-			direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
-			bounce_countdown = rng.randi_range(2, 4)
-		
-#	if collision != null and collision.collider.name != "Player" and collision.collider.name != "Skeleton":
-#		direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
-#		bounce_countdown = rng.randi_range(2, 4)
+		collision = move_and_collide(speed * direction * delta)
 
-	# Animate skeleton based on direction
-	if not other_animation_playing:
-		animates_monster(direction)
+		if collision != null:
+			if collision.collider.name == "Player":
+				player.hit(damage)
+			elif collision.collider.name != "Skeleton":
+				direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
+				bounce_countdown = rng.randi_range(2, 4)
+
+	#	if collision != null and collision.collider.name != "Player" and collision.collider.name != "Skeleton":
+	#		direction = direction.rotated(rng.randf_range(PI / 4.0, PI / 2.0))
+	#		bounce_countdown = rng.randi_range(2, 4)
+
+		# Animate skeleton based on direction
+		if not other_animation_playing:
+			animates_monster(direction)
 
 
 func _on_Timer_timeout():
@@ -103,18 +110,22 @@ func arise():
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == "birth":
 		$AnimatedSprite.animation = "down_idle"
-		$Timer.start()
+		$IATimer.start()
 	elif $AnimatedSprite.animation == "death":
 		get_tree().queue_delete(self)
 	other_animation_playing = false
 
 
-func hit(damage_in: float):
+func hit(damage_in: float, impact: Vector2):
+	stunned = true
+	$StunTimer.start()
+	$AnimatedSprite.stop()
+	impact_direction = impact
 	health -= damage_in
-	if health > 0:
+	if health > 0.0:
 		$AnimationPlayer.play("hit")
 	else:
-		$Timer.stop()
+		$IATimer.stop()
 		direction = Vector2.ZERO
 		# The set_process() function is used to enable/disable the _process()
 		# function call at each frame. We disable it, to prevent the regeneration of skeleton’s health.
@@ -122,4 +133,11 @@ func hit(damage_in: float):
 		other_animation_playing = true
 		$AnimatedSprite.play("death")
 		$CollisionShape2D.disabled = true
+
 		emit_signal("death")
+
+
+func _on_StunTimer_timeout():
+	if health > 0.0:
+		stunned = false
+		animates_monster(direction)
