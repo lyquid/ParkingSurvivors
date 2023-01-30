@@ -96,8 +96,8 @@ func _on_ShowTimer_timeout():
 func hit(damage):
 	health -= damage
 	update_healthbar()
-	#emit_signal("player_stats_changed", self)
+	$AnimationPlayer.play("hit")
+	$HitParticles.emitting = true
 	if health <= 0:
+		# die!
 		pass
-	else:
-		$AnimationPlayer.play("hit")

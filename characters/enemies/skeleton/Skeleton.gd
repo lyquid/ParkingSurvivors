@@ -9,7 +9,7 @@ var player
 var rng = RandomNumberGenerator.new()
 
 # Movement variables
-export var speed := 40.0
+export var speed := 20.0
 var direction: Vector2
 var last_direction := Vector2(0, 1)
 var bounce_countdown := 0

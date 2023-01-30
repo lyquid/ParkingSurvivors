@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://characters/player/graphics/playerGrey_walk1.png" type="Texture" id=2]
@@ -14,7 +14,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 12, 15.5 )
+extents = Vector2( 10, 14.25 )
 
 [sub_resource type="RectangleShape2D" id=3]
 
@@ -34,12 +34,24 @@ tracks/0/keys = {
 "values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
+[sub_resource type="ParticlesMaterial" id=5]
+lifetime_randomness = 0.5
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 120.0
+initial_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = -80.0
+damping = 200.0
+damping_random = 0.2
+color = Color( 0.956863, 0.0784314, 0.0784314, 1 )
+
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
@@ -47,14 +59,11 @@ frames = SubResource( 1 )
 animation = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -1.5 )
+position = Vector2( 0, -1.25 )
 shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="HealthBar" parent="." instance=ExtResource( 4 )]
 margin_left = -16.0
@@ -83,6 +92,15 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/hit = SubResource( 4 )
+
+[node name="HitParticles" type="Particles2D" parent="."]
+emitting = false
+amount = 200
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2( -30.4245, -20.2458, 59.3353, 62.2812 )
+local_coords = false
+process_material = SubResource( 5 )
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Weapon/ShowTimer" to="." method="_on_ShowTimer_timeout"]
