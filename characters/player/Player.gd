@@ -9,11 +9,20 @@ var healthbar_length := 0.0
 # directional vector
 var direction := Vector2.ZERO
 var facing_left := false
-
 # attack stuff
 export var attack_damage := 80.0
 export var attack_length := 50.0
 export var attack_kinematic_force := 25.0
+# camera
+export var min_zoom := 0.5
+export var max_zoom := 2000.0
+export var zoom_factor := 0.1
+# Duration of the zoom's tween animation.
+export var zoom_duration := 0.2
+# The camera's target zoom level.
+var zoom_level := 1.0 setget set_zoom_level
+onready var camera := $Camera2D
+onready var tween := $Camera2D/Tween
 
 
 # Called when the node enters the scene tree for the first time.
@@ -107,3 +116,30 @@ func hit(damage):
 	if health <= 0.0:
 		# die!
 		pass
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("zoom_in"):
+		# Inside a given class, we need to either write `self._zoom_level = ...` or explicitly
+		# call the setter function to use it.
+		set_zoom_level(zoom_level - zoom_factor)
+	if event.is_action_pressed("zoom_out"):
+		set_zoom_level(zoom_level + zoom_factor)
+
+
+func set_zoom_level(value: float):
+	# We limit the value between `min_zoom` and `max_zoom`
+	zoom_level = clamp(value, min_zoom, max_zoom)
+	# Then, we ask the tween node to animate the camera's `zoom` property from its current value
+	# to the target zoom level.
+	tween.interpolate_property(
+		camera,
+		"zoom",
+		camera.zoom,
+		Vector2(zoom_level, zoom_level),
+		zoom_duration,
+		tween.TRANS_SINE,
+		# Easing out means we start fast and slow down as we reach the target value.
+		tween.EASE_OUT
+	)
+	tween.start()

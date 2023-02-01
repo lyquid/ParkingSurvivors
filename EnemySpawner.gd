@@ -3,7 +3,7 @@ extends Path2D
 # Nodes references
 var player
 var tilemap
-var tree_tilemap
+#var tree_tilemap
 
 # Spawner variables
 export var max_skeletons: int = 100
@@ -20,8 +20,8 @@ func _ready():
 	# player reference
 	player = get_tree().root.get_node("Main/Player")
 	# Get tilemaps references
-	tilemap = get_tree().root.get_node("Main/TileMap")
-	tree_tilemap = get_tree().root.get_node("Main/Tree TileMap")
+	tilemap = get_tree().root.get_node("Main/MapGenerator/Terrain")
+#	tree_tilemap = get_tree().root.get_node("Main/Tree TileMap")
 	# Initialize random number generator
 	rng.randomize()
 	# Create skeletons
@@ -54,8 +54,8 @@ func test_position(position: Vector2):
 	var cell_type_id = tilemap.get_cellv(cell_coord)
 	var grass_or_sand = (cell_type_id == tilemap.tile_set.find_tile_by_name("Grass")) or (cell_type_id == tilemap.tile_set.find_tile_by_name("Sand"))
 	# Check if there's a tree in this position
-	cell_coord = tree_tilemap.world_to_map(position)
-	cell_type_id = tree_tilemap.get_cellv(cell_coord)
+#	cell_coord = tree_tilemap.world_to_map(position)
+#	cell_type_id = tree_tilemap.get_cellv(cell_coord)
 	var no_trees = (cell_type_id != tilemap.tile_set.find_tile_by_name("Tree"))
 	# If the two conditions are true, the position is valid
 	return grass_or_sand and no_trees

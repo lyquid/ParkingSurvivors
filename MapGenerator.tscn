@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://tilesets/MapTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://MapGenerator.gd" type="Script" id=2]
+
+[node name="MapGenerator" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Terrain" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+
+[node name="Trees" type="TileMap" parent="."]
+z_index = 2
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
