@@ -98,11 +98,14 @@ anims/hit = SubResource( 4 )
 [node name="HitParticles" type="Particles2D" parent="."]
 emitting = false
 amount = 200
-one_shot = true
-explosiveness = 1.0
+explosiveness = 0.1
 visibility_rect = Rect2( -30.4245, -20.2458, 59.3353, 62.2812 )
 local_coords = false
 process_material = SubResource( 5 )
 
+[node name="EmissionTimer" type="Timer" parent="HitParticles"]
+wait_time = 0.2
+
 [connection signal="timeout" from="AttackTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Weapon/ShowTimer" to="." method="_on_ShowTimer_timeout"]
+[connection signal="timeout" from="HitParticles/EmissionTimer" to="." method="_on_EmissionTimer_timeout"]

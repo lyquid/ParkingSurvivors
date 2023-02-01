@@ -113,6 +113,7 @@ func hit(damage):
 	update_healthbar()
 	$AnimationPlayer.play("hit")
 	$HitParticles.emitting = true
+	$HitParticles/EmissionTimer.start()
 	if health <= 0.0:
 		# die!
 		pass
@@ -143,3 +144,7 @@ func set_zoom_level(value: float):
 		tween.EASE_OUT
 	)
 	tween.start()
+
+
+func _on_EmissionTimer_timeout():
+	$HitParticles.emitting = false
