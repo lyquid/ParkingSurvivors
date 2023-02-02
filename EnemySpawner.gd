@@ -8,6 +8,7 @@ export var max_skeletons := 100
 export var start_skeletons := 5
 var skeleton_count := 0
 var skeleton_scene := preload("res://characters/enemies/skeleton/Skeleton.tscn")
+onready var enemy_spawn_location := $EnemySpawnLocation
 # Random number generator
 var rng := RandomNumberGenerator.new()
 
@@ -19,7 +20,7 @@ func _ready():
 	
 	rng.randomize()
 	
-	# Create skeletons
+	# Create starting skeletons
 	for _i in range(start_skeletons):
 		instance_skeleton()
 	skeleton_count = start_skeletons
@@ -30,9 +31,8 @@ func instance_skeleton():
 	var skeleton := skeleton_scene.instance()
 	get_tree().root.get_node("Main").call_deferred("add_child", skeleton)
 	# Connect Skeleton's death signal to the spawner
-	skeleton.connect("death", self, "_on_Skeleton_death")
-	 # Choose a location on Path2D.
-	var enemy_spawn_location := $EnemySpawnLocation
+	var err := skeleton.connect("death", self, "_on_Skeleton_death")
+	assert(!err)
 	# Check if it's a valid position
 	var valid_position = false
 	while not valid_position:
