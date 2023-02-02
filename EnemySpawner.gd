@@ -3,13 +3,11 @@ extends Path2D
 # Nodes references
 var player
 var tilemap
-
 # Spawner variables
 export var max_skeletons := 100
 export var start_skeletons := 5
 var skeleton_count := 0
 var skeleton_scene := preload("res://characters/enemies/skeleton/Skeleton.tscn")
-
 # Random number generator
 var rng := RandomNumberGenerator.new()
 

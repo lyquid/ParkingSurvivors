@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://weapons/Weapon.gd"
+} ]
+_global_script_class_icons={
+"Weapon": ""
+}
+
 [application]
 
 config/name="ParkingSurvivors"

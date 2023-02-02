@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://weapons/BaseballBat.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="BaseballBat" type="Node2D"]
+script = ExtResource( 1 )
+cooldown = 1.0
+damage = 80.0
+kinematic_force = 25.0
+
+[node name="Cooldown" type="Timer" parent="."]
+
+[node name="AttackArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource( 1 )
+
+[node name="WeaponGraphics" type="ColorRect" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 6.0
+color = Color( 0.960784, 0.0784314, 0.0352941, 1 )
+
+[node name="ShowTimer" type="Timer" parent="WeaponGraphics"]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
+[connection signal="timeout" from="WeaponGraphics/ShowTimer" to="." method="_on_ShowTimer_timeout"]

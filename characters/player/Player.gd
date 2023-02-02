@@ -14,10 +14,6 @@ onready var hit_particles := $HitParticles
 # directional vector
 var direction := Vector2.ZERO
 var facing_left := false
-# attack stuff
-export var attack_damage := 80.0
-export var attack_length := 50.0
-export var attack_kinematic_force := 25.0
 # camera
 export var min_zoom := 0.5
 export var max_zoom := 2000.0
@@ -32,9 +28,6 @@ onready var tween := $Camera2D/Tween
 
 func _ready():
 	healthbar_length = healthbar.rect_size.x
-	$AttackArea/CollisionShape2D.shape.extents.x = attack_length
-	$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
-	$Weapon.set_size(Vector2(attack_length * 2.0, 5.0))
 	update_healthbar()
 
 
@@ -51,12 +44,10 @@ func _physics_process(_delta):
 		animated_sprite.stop()
 
 	var _move_result := move_and_slide(speed * direction)
-	# move the area2d to the corresponding side
+	
 	if direction.x > 0.0:
-		$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 		facing_left = false
 	elif direction.x < 0.0:
-		$AttackArea.set_transform(Transform2D(0.0, Vector2(-$AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 		facing_left = true
 
 
@@ -77,34 +68,7 @@ func update_healthbar():
 	healthbar.rect_size.x = healthbar_length * health / max_health
 
 
-func attack():
-	var bodies = $AttackArea.get_overlapping_bodies()
-	for body in bodies:
-		if body.name.find("Skeleton") >= 0:
-			# Skeleton hit!
-			var impact_direction: Vector2
-			if facing_left:
-				impact_direction = Vector2(-attack_kinematic_force, 0.0)
-			else:
-				impact_direction = Vector2(attack_kinematic_force, 0.0)
-			body.hit(attack_damage, impact_direction)
-	$Weapon/ShowTimer.start()
-	if facing_left:
-		$Weapon.set_position(Vector2(-$Weapon.get_rect().size.x, 0.0))
-	else:
-		$Weapon.set_position(Vector2.ZERO)
-	$Weapon.visible = true
-
-
-func _on_Timer_timeout():
-	attack()
-
-
-func _on_ShowTimer_timeout():
-	$Weapon.visible = false
-
-
-func hit(damage):
+func hit(damage: float):
 	health -= damage
 	update_healthbar()
 	animation_player.play("hit")
@@ -114,6 +78,10 @@ func hit(damage):
 	if health <= 0.0:
 		# die!
 		pass
+
+
+func is_facing_left() -> bool:
+	return facing_left
 
 
 func _unhandled_input(event):
