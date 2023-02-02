@@ -1,11 +1,16 @@
 extends KinematicBody2D
 
-# How fast the player will move (pixels/sec).
+# stats
 export var speed := 50.0
 export var max_health := 100.0
 var health := 100.0
 var health_regen := 1.0
 var healthbar_length := 0.0
+onready var healthbar := $HealthBar/Inside
+# graphics
+onready var animated_sprite := $AnimatedSprite
+onready var animation_player := $AnimationPlayer
+onready var hit_particles := $HitParticles
 # directional vector
 var direction := Vector2.ZERO
 var facing_left := false
@@ -25,9 +30,8 @@ onready var camera := $Camera2D
 onready var tween := $Camera2D/Tween
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	healthbar_length = $HealthBar/Inside.rect_size.x
+	healthbar_length = healthbar.rect_size.x
 	$AttackArea/CollisionShape2D.shape.extents.x = attack_length
 	$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
 	$Weapon.set_size(Vector2(attack_length * 2.0, 5.0))
@@ -37,18 +41,16 @@ func _ready():
 func _physics_process(_delta):
 	direction.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	direction.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-
 	# If input is digital, normalize it for diagonal movement
 	if abs(direction.x) == 1.0 and abs(direction.y) == 1.0:
 		direction = direction.normalized()
 
 	if direction.length_squared() > 0.0:
-		$AnimatedSprite.play()
+		animated_sprite.play()
 	else:
-		$AnimatedSprite.stop()
+		animated_sprite.stop()
 
 	var _move_result := move_and_slide(speed * direction)
-
 	# move the area2d to the corresponding side
 	if direction.x > 0.0:
 		$AttackArea.set_transform(Transform2D(0.0, Vector2($AttackArea/CollisionShape2D.shape.extents.x, 0.0)))
@@ -61,9 +63,9 @@ func _physics_process(_delta):
 func _process(delta):
 	# sprite flip
 	if direction.x != 0.0:
-		$AnimatedSprite.animation = "walk"
-		$AnimatedSprite.flip_v = false
-		$AnimatedSprite.flip_h = direction.x < 0.0
+		animated_sprite.animation = "walk"
+		animated_sprite.flip_v = false
+		animated_sprite.flip_h = direction.x < 0.0
 	# health update
 	var new_health = min(health + health_regen * delta, max_health)
 	if new_health != health:
@@ -72,7 +74,7 @@ func _process(delta):
 
 
 func update_healthbar():
-	$HealthBar/Inside.rect_size.x = healthbar_length * health / max_health
+	healthbar.rect_size.x = healthbar_length * health / max_health
 
 
 func attack():
@@ -86,12 +88,6 @@ func attack():
 			else:
 				impact_direction = Vector2(attack_kinematic_force, 0.0)
 			body.hit(attack_damage, impact_direction)
-#			attack_length += 1
-#			$Area2D/CollisionShape2D.shape.extents.x = attack_length
-#			if facing_left:
-#				$Area2D.set_transform(Transform2D(0.0, Vector2(-$Area2D/CollisionShape2D.shape.extents.x, 0.0)))
-#			else:
-#				$Area2D.set_transform(Transform2D(0.0, Vector2($Area2D/CollisionShape2D.shape.extents.x, 0.0)))
 	$Weapon/ShowTimer.start()
 	if facing_left:
 		$Weapon.set_position(Vector2(-$Weapon.get_rect().size.x, 0.0))
@@ -111,8 +107,9 @@ func _on_ShowTimer_timeout():
 func hit(damage):
 	health -= damage
 	update_healthbar()
-	$AnimationPlayer.play("hit")
-	$HitParticles.emitting = true
+	animation_player.play("hit")
+	hit_particles.emitting = true
+	# how?
 	$HitParticles/EmissionTimer.start()
 	if health <= 0.0:
 		# die!
@@ -147,4 +144,4 @@ func set_zoom_level(value: float):
 
 
 func _on_EmissionTimer_timeout():
-	$HitParticles.emitting = false
+	hit_particles.emitting = false

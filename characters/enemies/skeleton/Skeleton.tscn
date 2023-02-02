@@ -138,7 +138,7 @@ shape = SubResource( 2 )
 [node name="IATimer" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="HitAnimation" type="AnimationPlayer" parent="."]
 anims/hit = SubResource( 3 )
 
 [node name="StunTimer" type="Timer" parent="."]

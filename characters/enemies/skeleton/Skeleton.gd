@@ -4,19 +4,17 @@ signal death
 
 # Node references
 var player: Node2D
-
 # Random number generator
 var rng := RandomNumberGenerator.new()
-
 # Movement variables
 export var speed := 20.0
 var direction := Vector2.ZERO
 var last_direction := Vector2(0.0, 1.0)
 var bounce_countdown := 0
-
 # Animation variables
 var other_animation_playing := false
-
+onready var animated_sprite := $AnimatedSprite
+onready var hit_animation := $HitAnimation
 # health and damage
 export var health := 100.0
 export var damage := 0.2
@@ -24,11 +22,10 @@ var impact_direction := Vector2.ZERO
 var stunned := false
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	# player reference
 	player = get_tree().root.get_node("Main/Player")
 	rng.randomize()
+	arise()
 
 
 func _physics_process(delta):
@@ -66,8 +63,7 @@ func _physics_process(delta):
 
 func _on_Timer_timeout():
 	# Calculate the position of the player relative to the skeleton
-	var player_relative_position = player.position - position
-
+	var player_relative_position := player.position - position
 	direction = player_relative_position.normalized()
 
 #	if player_relative_position.length() <= 16:
@@ -83,8 +79,8 @@ func _on_Timer_timeout():
 		bounce_countdown = bounce_countdown - 1
 
 
-func get_animation_direction(direction_in: Vector2):
-	var norm_direction = direction_in.normalized()
+func get_animation_direction(direction_in: Vector2) -> String:
+	var norm_direction := direction_in.normalized()
 	if norm_direction.y >= 0.707:
 		return "down"
 	elif norm_direction.y <= -0.707:
@@ -99,28 +95,24 @@ func get_animation_direction(direction_in: Vector2):
 func animates_monster(direction_in: Vector2):
 	if direction_in != Vector2.ZERO:
 		last_direction = direction_in
-
 		# Choose walk animation based on movement direction
-		var animation = get_animation_direction(last_direction) + "_walk"
-
 		# Play the walk animation
-		$AnimatedSprite.play(animation)
+		animated_sprite.play(get_animation_direction(last_direction) + "_walk")
 	else:
 		# Choose idle animation based on last movement direction and play it
-		var animation = get_animation_direction(last_direction) + "_idle"
-		$AnimatedSprite.play(animation)
+		animated_sprite.play(get_animation_direction(last_direction) + "_idle")
 
 
 func arise():
 	other_animation_playing = true
-	$AnimatedSprite.play("birth")
+	animated_sprite.play("birth")
 
 
 func _on_AnimatedSprite_animation_finished():
-	if $AnimatedSprite.animation == "birth":
-		$AnimatedSprite.animation = "down_idle"
+	if animated_sprite.animation == "birth":
+		animated_sprite.animation = "down_idle"
 		$IATimer.start()
-	elif $AnimatedSprite.animation == "death":
+	elif animated_sprite.animation == "death":
 		get_tree().queue_delete(self)
 	other_animation_playing = false
 
@@ -128,19 +120,16 @@ func _on_AnimatedSprite_animation_finished():
 func hit(damage_in: float, impact: Vector2):
 	stunned = true
 	$StunTimer.start()
-	$AnimatedSprite.stop()
+	animated_sprite.stop()
 	impact_direction = impact
 	health -= damage_in
 	if health > 0.0:
-		$AnimationPlayer.play("hit")
+		hit_animation.play("hit")
 	else:
 		$IATimer.stop()
 		direction = Vector2.ZERO
-		# The set_process() function is used to enable/disable the _process()
-		# function call at each frame. We disable it, to prevent the regeneration of skeleton’s health.
-		#set_process(false)
 		other_animation_playing = true
-		$AnimatedSprite.play("death")
+		animated_sprite.play("death")
 		$CollisionShape2D.disabled = true
 
 		emit_signal("death")
