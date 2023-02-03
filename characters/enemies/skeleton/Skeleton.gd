@@ -15,6 +15,9 @@ var bounce_countdown := 0
 var other_animation_playing := false
 onready var animated_sprite := $AnimatedSprite
 onready var hit_animation := $HitAnimation
+onready var collision_shape := $CollisionShape2D
+onready var ia_timer := $IATimer
+onready var stun_timer := $StunTimer
 # health and damage
 export var health := 100.0
 export var damage := 0.2
@@ -111,27 +114,27 @@ func arise():
 func _on_AnimatedSprite_animation_finished():
 	if animated_sprite.animation == "birth":
 		animated_sprite.animation = "down_idle"
-		$IATimer.start()
+		ia_timer.start()
 	elif animated_sprite.animation == "death":
 		get_tree().queue_delete(self)
 	other_animation_playing = false
 
 
-func hit(damage_in: float, impact: Vector2):
-	stunned = true
-	$StunTimer.start()
-	animated_sprite.stop()
+func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
+	stunned = stun
+	if stunned:
+		stun_timer.start()
+		animated_sprite.stop()
 	impact_direction = impact
 	health -= damage_in
 	if health > 0.0:
 		hit_animation.play("hit")
 	else:
-		$IATimer.stop()
+		ia_timer.stop()
 		direction = Vector2.ZERO
 		other_animation_playing = true
 		animated_sprite.play("death")
-		$CollisionShape2D.disabled = true
-
+		collision_shape.call_deferred("set_disabled", true)
 		emit_signal("death")
 
 

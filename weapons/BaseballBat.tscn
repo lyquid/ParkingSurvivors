@@ -6,9 +6,6 @@
 
 [node name="BaseballBat" type="Node2D"]
 script = ExtResource( 1 )
-cooldown = 1.0
-damage = 80.0
-kinematic_force = 25.0
 
 [node name="Cooldown" type="Timer" parent="."]
 

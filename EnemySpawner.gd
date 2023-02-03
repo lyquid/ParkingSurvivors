@@ -1,11 +1,13 @@
 extends Path2D
 
+const DEFAULT_SPAWN_TIME := 1.0
+
 # Nodes references
 var player
 var tilemap
 # Spawner variables
-export var max_skeletons := 100
-export var start_skeletons := 5
+var max_skeletons := 1000
+var start_skeletons := 50
 var skeleton_count := 0
 var skeleton_scene := preload("res://characters/enemies/skeleton/Skeleton.tscn")
 onready var enemy_spawn_location := $EnemySpawnLocation
@@ -15,10 +17,13 @@ var rng := RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	rng.randomize()
+	
 	player = get_tree().root.get_node("Main/Player")
 	tilemap = get_tree().root.get_node("Main/MapGenerator/Terrain")
 	
-	rng.randomize()
+	$SpawnTimer.wait_time = DEFAULT_SPAWN_TIME
+	$SpawnTimer.start()
 	
 	# Create starting skeletons
 	for _i in range(start_skeletons):
