@@ -64,24 +64,6 @@ func _physics_process(delta):
 			animates_monster(direction)
 
 
-func _on_Timer_timeout():
-	# Calculate the position of the player relative to the skeleton
-	var player_relative_position := player.position - position
-	direction = player_relative_position.normalized()
-
-#	if player_relative_position.length() <= 16:
-#		# If player is near, don't move but turn toward it
-#		direction = Vector2.ZERO
-#		last_direction = player_relative_position.normalized()
-#	elif player_relative_position.length() <= 100 and bounce_countdown == 0:
-#		# If player is within range, move toward it
-#		direction = player_relative_position.normalized()
-#
-	# Update bounce countdown
-	if bounce_countdown > 0:
-		bounce_countdown = bounce_countdown - 1
-
-
 func get_animation_direction(direction_in: Vector2) -> String:
 	var norm_direction := direction_in.normalized()
 	if norm_direction.y >= 0.707:
@@ -142,3 +124,21 @@ func _on_StunTimer_timeout():
 	if health > 0.0:
 		stunned = false
 		animates_monster(direction)
+
+
+func _on_IATimer_timeout():
+		# Calculate the position of the player relative to the skeleton
+	var player_relative_position := player.position - position
+	direction = player_relative_position.normalized()
+
+#	if player_relative_position.length() <= 16:
+#		# If player is near, don't move but turn toward it
+#		direction = Vector2.ZERO
+#		last_direction = player_relative_position.normalized()
+#	elif player_relative_position.length() <= 100 and bounce_countdown == 0:
+#		# If player is within range, move toward it
+#		direction = player_relative_position.normalized()
+#
+	# Update bounce countdown
+	if bounce_countdown > 0:
+		bounce_countdown = bounce_countdown - 1

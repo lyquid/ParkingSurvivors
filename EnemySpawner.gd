@@ -7,7 +7,7 @@ var player
 var tilemap
 # Spawner variables
 var max_skeletons := 1000
-var start_skeletons := 50
+var start_skeletons := 18
 var skeleton_count := 0
 var skeleton_scene := preload("res://characters/enemies/skeleton/Skeleton.tscn")
 onready var enemy_spawn_location := $EnemySpawnLocation

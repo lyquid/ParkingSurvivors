@@ -11,8 +11,10 @@ onready var healthbar := $HealthBar/Inside
 onready var animated_sprite := $AnimatedSprite
 onready var animation_player := $AnimationPlayer
 onready var hit_particles := $HitParticles
+onready var hit_particles_timer := $HitParticles/EmissionTimer
 # directional vector
 var direction := Vector2.ZERO
+var last_moving_direction := Vector2(1.0, 0.0)
 var facing_left := false
 # camera
 export var min_zoom := 0.5
@@ -40,6 +42,7 @@ func _physics_process(_delta):
 
 	if direction.length_squared() > 0.0:
 		animated_sprite.play()
+		last_moving_direction = direction
 	else:
 		animated_sprite.stop()
 
@@ -68,13 +71,16 @@ func update_healthbar():
 	healthbar.rect_size.x = healthbar_length * health / max_health
 
 
+func get_last_moving_direction() -> Vector2:
+	return last_moving_direction
+
+
 func hit(damage: float):
 	health -= damage
 	update_healthbar()
 	animation_player.play("hit")
 	hit_particles.emitting = true
-	# how?
-	$HitParticles/EmissionTimer.start()
+	hit_particles_timer.start()
 	if health <= 0.0:
 		# die!
 		pass
