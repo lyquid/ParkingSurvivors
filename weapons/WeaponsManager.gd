@@ -3,8 +3,8 @@ extends Node
 class_name WeaponsManager
 
 onready var player := get_tree().root.get_node("Main/Player")
-var baseball_bat_scene := preload("res://weapons/BaseballBat.tscn")
-var knife_launcher_scene := preload("res://weapons/KnifeLauncher.tscn")
+var baseball_bat_scene := preload("res://weapons/baseball bat/BaseballBat.tscn")
+var knife_launcher_scene := preload("res://weapons/knife/KnifeLauncher.tscn")
 
 
 func _ready():

@@ -6,7 +6,7 @@ const DEFAULT_KINEMATIC_FORCE := 10.0
 const DEFAULT_SPEED := 300.0
 const DEFAULT_PIERCING := 3
 
-var knife_scene := preload("res://weapons/Knife.tscn")
+var knife_scene := preload("res://weapons/knife/Knife.tscn")
 onready var main := get_tree().root.get_node("Main")
 onready var cooldown_timer := $Cooldown
 var throw_direction := Vector2.ZERO
