@@ -1,7 +1,7 @@
 extends Weapon
 
 const DEFAULT_COOLDOWN_TIME := 0.75
-const DEFAULT_DAMAGE := 50.0
+const DEFAULT_DAMAGE := 1.0
 const DEFAULT_KINEMATIC_FORCE := 10.0
 const DEFAULT_SPEED := 300.0
 const DEFAULT_PIERCING := 3

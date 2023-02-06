@@ -7,7 +7,7 @@ var player: Node2D
 # Random number generator
 var rng := RandomNumberGenerator.new()
 # Movement variables
-export var speed := 20.0
+var speed := 20.0
 var direction := Vector2.ZERO
 var last_direction := Vector2(0.0, 1.0)
 var bounce_countdown := 0
@@ -19,15 +19,21 @@ onready var collision_shape := $CollisionShape2D
 onready var ia_timer := $IATimer
 onready var stun_timer := $StunTimer
 # health and damage
-export var health := 100.0
-export var damage := 0.2
+const DAMAGE_LABEL_SHOW_TIMER := 0.2
+var health := 2.0
+var damage := 0.2
 var impact_direction := Vector2.ZERO
 var stunned := false
+onready var damage_label := $DamageLabel
+onready var damage_label_show_timer := $DamageLabel/ShowTimer
+onready var damage_label_tween := $DamageLabel/Tween
 
 
 func _ready():
 	player = get_tree().root.get_node("Main/Player")
 	rng.randomize()
+	damage_label.visible = false
+	damage_label_show_timer.wait_time = DAMAGE_LABEL_SHOW_TIMER
 	arise()
 
 
@@ -119,6 +125,19 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 		collision_shape.call_deferred("set_disabled", true)
 		emit_signal("death")
 
+	damage_label.text = damage_in as String
+	damage_label.visible = true
+	damage_label_show_timer.start()
+#	damage_label_tween.interpolate_property(
+#		damage_label,
+#		"rect_rotation",
+#		0,
+#		90,
+#		DAMAGE_LABEL_SHOW_TIMER,
+#		Tween.TRANS_LINEAR,
+#		Tween.EASE_OUT
+#	)
+
 
 func _on_StunTimer_timeout():
 	if health > 0.0:
@@ -142,3 +161,7 @@ func _on_IATimer_timeout():
 	# Update bounce countdown
 	if bounce_countdown > 0:
 		bounce_countdown = bounce_countdown - 1
+
+
+func _on_ShowTimer_timeout():
+	damage_label.visible = false
