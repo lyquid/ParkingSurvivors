@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "EnemiesManager",
+"language": "GDScript",
+"path": "res://enemies/EnemiesManager.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://enemies/Enemy.gd"
+}, {
 "base": "Node2D",
 "class": "Weapon",
 "language": "GDScript",
@@ -20,6 +30,8 @@ _global_script_classes=[ {
 "path": "res://weapons/WeaponsManager.gd"
 } ]
 _global_script_class_icons={
+"EnemiesManager": "",
+"Enemy": "",
 "Weapon": "",
 "WeaponsManager": ""
 }
