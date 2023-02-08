@@ -19,7 +19,7 @@ onready var collision_shape := $CollisionShape2D
 onready var ia_timer := $IATimer
 onready var stun_timer := $StunTimer
 # damage
-const DAMAGE_LABEL_SHOW_TIMER := 0.2
+const DAMAGE_LABEL_SHOW_TIMER := 0.3
 var impact_direction := Vector2.ZERO
 var stunned := false
 onready var damage_label := $DamageLabel
@@ -128,15 +128,16 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 	damage_label.text = damage_in as String
 	damage_label.visible = true
 	damage_label_show_timer.start()
-#	damage_label_tween.interpolate_property(
-#		damage_label,
-#		"rect_rotation",
-#		0,
-#		90,
-#		DAMAGE_LABEL_SHOW_TIMER,
-#		Tween.TRANS_LINEAR,
-#		Tween.EASE_OUT
-#	)
+	damage_label_tween.interpolate_property(
+		damage_label,
+		"rect_scale",
+		damage_label.rect_scale * 0.1,
+		damage_label.rect_scale * 1,
+		DAMAGE_LABEL_SHOW_TIMER,
+		Tween.TRANS_BOUNCE,
+		Tween.EASE_OUT
+	)
+	damage_label_tween.start()
 
 
 func _on_StunTimer_timeout():
