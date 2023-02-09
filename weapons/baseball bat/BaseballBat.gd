@@ -10,6 +10,7 @@ onready var cooldown_timer := $Cooldown
 onready var attack_area := $AttackArea
 onready var attack_shape := $AttackArea/CollisionShape2D
 onready var graphics := $WeaponGraphics
+onready var show_timer := $WeaponGraphics/ShowTimer
 
 
 func _ready():
@@ -39,7 +40,7 @@ func attack():
 				impact_direction = Vector2(-kinematic_force, 0.0)
 			body.hit(damage, impact_direction, true)
 			
-	$WeaponGraphics/ShowTimer.start()
+	show_timer.start()
 	
 	if player.is_facing_left():
 		graphics.set_position(Vector2(-graphics.get_rect().size.x, 0.0))
