@@ -94,7 +94,10 @@ anims/hit = SubResource( 1 )
 wait_time = 0.5
 one_shot = true
 
-[node name="DamageLabel" type="Label" parent="."]
+[node name="DamageNode" type="Node2D" parent="."]
+z_index = 10
+
+[node name="DamageLabel" type="Label" parent="DamageNode"]
 margin_left = -4.0
 margin_top = -17.0
 margin_right = 4.0
@@ -103,12 +106,12 @@ custom_fonts/font = ExtResource( 2 )
 align = 1
 valign = 1
 
-[node name="ShowTimer" type="Timer" parent="DamageLabel"]
+[node name="ShowTimer" type="Timer" parent="DamageNode/DamageLabel"]
 one_shot = true
 
-[node name="Tween" type="Tween" parent="DamageLabel"]
+[node name="Tween" type="Tween" parent="DamageNode/DamageLabel"]
 
 [connection signal="timeout" from="IATimer" to="." method="_on_IATimer_timeout"]
 [connection signal="animation_finished" from="HitAnimation" to="." method="_on_HitAnimation_animation_finished"]
 [connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
-[connection signal="timeout" from="DamageLabel/ShowTimer" to="." method="_on_ShowTimer_timeout"]
+[connection signal="timeout" from="DamageNode/DamageLabel/ShowTimer" to="." method="_on_ShowTimer_timeout"]

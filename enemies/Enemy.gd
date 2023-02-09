@@ -17,9 +17,9 @@ var speed: float
 const DAMAGE_LABEL_SHOW_TIMER := 0.3
 var impact_direction := Vector2.ZERO
 var stunned := false
-onready var damage_label := $DamageLabel
-onready var damage_label_show_timer := $DamageLabel/ShowTimer
-onready var damage_label_tween := $DamageLabel/Tween
+onready var damage_label := $DamageNode/DamageLabel
+onready var damage_label_show_timer := $DamageNode/DamageLabel/ShowTimer
+onready var damage_label_tween := $DamageNode/DamageLabel/Tween
 # Animation variables
 var dying := false
 onready var animated_sprite := $AnimatedSprite
@@ -58,10 +58,6 @@ func _physics_process(delta):
 #			if collision.collider.name == "Player":
 #				player.hit(damage)
 
-		# Animate skeleton based on direction
-#		if not other_animation_playing:
-#			animates_monster(direction)
-			
 		if direction != Vector2.ZERO:
 			last_direction = direction
 
@@ -69,14 +65,7 @@ func _physics_process(delta):
 func _process(_delta):
 	# sprite flip
 	if !dying and direction.x != 0.0:
-#		animated_sprite.flip_v = false
 		animated_sprite.flip_h = direction.x < 0.0
-
-
-#func animates_monster(direction_in: Vector2):
-#	animated_sprite.play("walk")
-#	if direction_in != Vector2.ZERO:
-#		last_direction = direction_in
 
 
 func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
@@ -95,7 +84,7 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 		hit_animation.play("death")
 		collision_shape.call_deferred("set_disabled", true)
 		emit_signal("death")
-
+	# damage label
 	damage_label.text = damage_in as String
 	damage_label.visible = true
 	damage_label_show_timer.start()
