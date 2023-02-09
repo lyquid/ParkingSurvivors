@@ -21,7 +21,7 @@ onready var damage_label := $DamageLabel
 onready var damage_label_show_timer := $DamageLabel/ShowTimer
 onready var damage_label_tween := $DamageLabel/Tween
 # Animation variables
-var other_animation_playing := false
+var dying := false
 onready var animated_sprite := $AnimatedSprite
 onready var hit_animation := $HitAnimation
 onready var collision_shape := $CollisionShape2D
@@ -48,7 +48,7 @@ func _physics_process(delta):
 		move_and_slide(speed * direction)
 		for i in get_slide_count():
 			collision = get_slide_collision(i)
-			if collision != null && collision.collider.name == "Player":
+			if collision != null and collision.collider.name == "Player":
 				player.hit(damage)
 
 		# old movement
@@ -68,7 +68,7 @@ func _physics_process(delta):
 
 func _process(_delta):
 	# sprite flip
-	if direction.x != 0.0:
+	if !dying and direction.x != 0.0:
 #		animated_sprite.flip_v = false
 		animated_sprite.flip_h = direction.x < 0.0
 
@@ -91,10 +91,9 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 	else:
 		ia_timer.stop()
 		direction = Vector2.ZERO
-		other_animation_playing = true
-#		animated_sprite.play("death")
+		dying = true
+		hit_animation.play("death")
 		collision_shape.call_deferred("set_disabled", true)
-		get_tree().queue_delete(self) # maybe this after some dead animation
 		emit_signal("death")
 
 	damage_label.text = damage_in as String
@@ -124,4 +123,8 @@ func _on_ShowTimer_timeout():
 func _on_StunTimer_timeout():
 	if health > 0.0:
 		stunned = false
-#		animates_monster(direction)
+
+
+func _on_HitAnimation_animation_finished(anim_name):
+	if anim_name == "death":
+		get_tree().queue_delete(self)

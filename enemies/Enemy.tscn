@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://enemies/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://fonts/Font.tres" type="DynamicFont" id=2]
@@ -14,6 +14,46 @@ animations = [ {
 "name": "walk",
 "speed": 5.0
 } ]
+
+[sub_resource type="Animation" id=4]
+resource_name = "death"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.33, 0.33 ), Vector2( 0.33, 0.001 ) ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "hit"
@@ -47,6 +87,7 @@ animation = "walk"
 wait_time = 0.5
 
 [node name="HitAnimation" type="AnimationPlayer" parent="."]
+anims/death = SubResource( 4 )
 anims/hit = SubResource( 1 )
 
 [node name="StunTimer" type="Timer" parent="."]
@@ -68,5 +109,6 @@ one_shot = true
 [node name="Tween" type="Tween" parent="DamageLabel"]
 
 [connection signal="timeout" from="IATimer" to="." method="_on_IATimer_timeout"]
+[connection signal="animation_finished" from="HitAnimation" to="." method="_on_HitAnimation_animation_finished"]
 [connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
 [connection signal="timeout" from="DamageLabel/ShowTimer" to="." method="_on_ShowTimer_timeout"]
