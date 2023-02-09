@@ -39,7 +39,7 @@ func _on_AttackArea_body_entered(body):
 			print("waterrrrrrrrrrrrrrrrrrrrrrrrrrrr")
 			return
 
-	if body.name.find("Skeleton") >= 0:
+	if body.name.find("Enemy") >= 0:
 		var impact_direction := Vector2(kinematic_force, 0.0)
 		if player.is_facing_left():
 			impact_direction = Vector2(-kinematic_force, 0.0)

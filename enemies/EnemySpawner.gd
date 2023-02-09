@@ -1,11 +1,10 @@
 extends Path2D
 
 # Nodes references
-onready var player := get_tree().root.get_node("Main/Player")
+onready var player := get_tree().root.get_node("Main/YSort/Player")
 onready var tilemap := get_tree().root.get_node("Main/MapGenerator/Terrain")
 onready var enemies_manager := get_tree().root.get_node("Main/EnemiesManager")
 # Spawner variables
-var skeleton_scene := preload("res://enemies/skeleton/Skeleton.tscn")
 onready var enemy_spawn_location := $EnemySpawnLocation
 
 

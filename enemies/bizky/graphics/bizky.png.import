@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/skeleton_down_idle_2.png-49f8763f047d518360621dc4eb91758e.stex"
+path="res://.import/bizky.png-8e89f863c7ef752639700e1f90636be6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/skeleton/graphics/skeleton_down_idle_2.png"
-dest_files=[ "res://.import/skeleton_down_idle_2.png-49f8763f047d518360621dc4eb91758e.stex" ]
+source_file="res://enemies/bizky/graphics/bizky.png"
+dest_files=[ "res://.import/bizky.png-8e89f863c7ef752639700e1f90636be6.stex" ]
 
 [params]
 

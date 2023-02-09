@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/skeleton_death_5.png-e0a5fc5ea331408d45bfbec8b4f6005a.stex"
+path="res://.import/bizky_resized.png-11e4d5315bd1e24a7675bc36059a6fd6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/skeleton/graphics/skeleton_death_5.png"
-dest_files=[ "res://.import/skeleton_death_5.png-e0a5fc5ea331408d45bfbec8b4f6005a.stex" ]
+source_file="res://enemies/bizky/graphics/bizky_resized.png"
+dest_files=[ "res://.import/bizky_resized.png-11e4d5315bd1e24a7675bc36059a6fd6.stex" ]
 
 [params]
 

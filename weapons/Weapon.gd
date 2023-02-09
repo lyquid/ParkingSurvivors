@@ -6,4 +6,4 @@ var cooldown: float
 var damage: float
 var kinematic_force: float
 
-onready var player := get_tree().root.get_node("Main/Player")
+onready var player := get_tree().root.get_node("Main/YSort/Player")

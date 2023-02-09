@@ -39,22 +39,20 @@ func _ready():
 
 	for i in range(-size.y * 0.5, size.y * 0.5):
 		for j in range(-size.x * 0.5, size.x * 0.5):
-			
+
 			var noise_value: float = noise.get_noise_2d(j, i)
 			if noise_value < -0.5:
 				terrain.set_cell(j, i, TILE.WATER)
 			elif noise_value < 0.3:
-				if rng.randi_range(1, 100) == 1:
+				if rng.randi_range(1, 500) == 1:
 					var obstacle: int = rng.randi_range(0, 2)
 					terrain.set_cell(j, i, TILE.OBSTACLE, false, false, false, obstacles_arr[obstacle])
 				else:
 					terrain.set_cell(j, i, TILE.GRASS)
-					if rng.randi_range(1, 100) == 1:
+					if rng.randi_range(1, 500) == 1:
 						trees.set_cell(j, i, TILE.TREE)
 			else:
 				terrain.set_cell(j, i, TILE.SAND)
-				
-	
 
 	terrain.update_bitmask_region(
 		Vector2(-size.x * 0.5 - water_offset, -size.y * 0.5 - water_offset), 

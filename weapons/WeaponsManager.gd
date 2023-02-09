@@ -2,7 +2,7 @@ extends Node
 
 class_name WeaponsManager
 
-onready var player := get_tree().root.get_node("Main/Player")
+onready var player := get_tree().root.get_node("Main/YSort/Player")
 var baseball_bat_scene := preload("res://weapons/baseball bat/BaseballBat.tscn")
 var knife_launcher_scene := preload("res://weapons/knife/KnifeLauncher.tscn")
 
