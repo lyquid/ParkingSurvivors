@@ -37,6 +37,7 @@ func _ready():
 	speed = DEFAULT_SKELETON_SPEED
 	damage_label.visible = false
 	damage_label_show_timer.wait_time = DAMAGE_LABEL_SHOW_TIMER
+	hit_animation.play("walk")
 	ia_timer.start()
 
 
@@ -112,6 +113,7 @@ func _on_ShowTimer_timeout():
 func _on_StunTimer_timeout():
 	if health > 0.0:
 		stunned = false
+		hit_animation.play("walk")
 
 
 func _on_HitAnimation_animation_finished(anim_name):
