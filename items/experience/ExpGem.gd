@@ -28,9 +28,8 @@ func _on_DirectionTimer_timeout():
 
 
 func _on_ExpGem_body_entered(body):
-	if "Player" in body.name:
-		body.add_experience(exp_value)
-		pickup_sound.play()
+	body.add_experience(exp_value)
+	pickup_sound.play()
 
 
 func _on_PickupSound_finished():

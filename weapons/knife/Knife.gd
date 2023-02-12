@@ -29,25 +29,13 @@ func _process(delta):
 
 
 func _on_AttackArea_body_entered(body):
-	if body.name == "Player":
+	var impact_direction := Vector2(kinematic_force, 0.0)
+	if player.is_facing_left():
+		impact_direction = Vector2(-kinematic_force, 0.0)
+	body.hit(damage, impact_direction, true)
+	piercing_power -= 1
+	if piercing_power:
 		return
-
-	if body.name == "Terrain":
-		var cell_coord = tilemap.world_to_map(position)
-		var cell_type_id = tilemap.get_cellv(cell_coord)
-		if cell_type_id == tilemap.tile_set.find_tile_by_name("Water"):
-			print("waterrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-			return
-
-	if body.name.find("Enemy") >= 0:
-		var impact_direction := Vector2(kinematic_force, 0.0)
-		if player.is_facing_left():
-			impact_direction = Vector2(-kinematic_force, 0.0)
-		body.hit(damage, impact_direction, true)
-		piercing_power -= 1
-		if piercing_power:
-			return
-	
 	# Stop the movement and delete
 	direction = Vector2.ZERO
 	get_tree().queue_delete(self)

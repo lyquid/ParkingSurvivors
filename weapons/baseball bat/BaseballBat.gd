@@ -34,14 +34,13 @@ func _process(_delta):
 func attack():
 	var bodies = attack_area.get_overlapping_bodies()
 	for body in bodies:
-		if "Enemy" in body.name:
-			var impact_direction := Vector2(kinematic_force, 0.0)
-			if player.is_facing_left():
-				impact_direction = Vector2(-kinematic_force, 0.0)
-			body.hit(damage, impact_direction, true)
-			
+		var impact_direction := Vector2(kinematic_force, 0.0)
+		if player.is_facing_left():
+			impact_direction = Vector2(-kinematic_force, 0.0)
+		body.hit(damage, impact_direction, true)
+
 	show_timer.start()
-	
+
 	if player.is_facing_left():
 		graphics.set_position(Vector2(-graphics.get_rect().size.x, 0.0))
 	else:

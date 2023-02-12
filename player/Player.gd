@@ -82,7 +82,7 @@ func add_experience(how_much: int):
 		experience = residue
 		print("level up: " + level as String + " xp until new level: " + experience_until_new_level as String)
 
-	emit_signal("experience_changed", experience * 100 / experience_until_new_level)
+	emit_signal("experience_changed", experience * 100.0 / experience_until_new_level)
 
 
 func update_healthbar():
@@ -140,5 +140,4 @@ func _on_EmissionTimer_timeout():
 
 
 func _on_PickupArea_area_entered(area):
-	if "Exp" in area.name:
-		area.go_to_player()
+	area.go_to_player()
