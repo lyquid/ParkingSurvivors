@@ -186,8 +186,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # Project exports
-ParkingSurvivors.exe
-ParkingSurvivors.pck
+*.exe
+*.pck
 debug.log
 
 # End of https://www.toptal.com/developers/gitignore/api/godot,linux,macos,windows,visualstudiocode,emacs,vim,notepadpp

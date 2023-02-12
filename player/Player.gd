@@ -1,8 +1,13 @@
 extends KinematicBody2D
 
-# stats
-export var speed := 50.0
-export var max_health := 100.0
+signal experience_changed(value)
+
+var level := 1
+var experience := 0
+var experience_until_new_level := 0
+onready var leveling_manager := get_tree().root.get_node("Main/LevelingManager")
+var speed := 50.0
+var max_health := 100.0
 var health := 100.0
 var health_regen := 1.0
 var healthbar_length := 0.0
@@ -29,6 +34,7 @@ onready var tween := $Camera2D/Tween
 
 
 func _ready():
+	experience_until_new_level = leveling_manager.new_level(level)
 	healthbar_length = healthbar.rect_size.x
 	update_healthbar()
 
@@ -47,7 +53,7 @@ func _physics_process(_delta):
 		animated_sprite.stop()
 
 	var _move_result := move_and_slide(speed * direction)
-	
+
 	if direction.x > 0.0:
 		facing_left = false
 	elif direction.x < 0.0:
@@ -65,6 +71,18 @@ func _process(delta):
 	if new_health != health:
 		health = new_health
 		update_healthbar()
+
+
+func add_experience(how_much: int):
+	experience += how_much
+	if experience >= experience_until_new_level:
+		var residue := experience - experience_until_new_level
+		level += 1
+		experience_until_new_level = leveling_manager.new_level(level)
+		experience = residue
+		print("level up: " + level as String + " xp until new level: " + experience_until_new_level as String)
+
+	emit_signal("experience_changed", experience * 100 / experience_until_new_level)
 
 
 func update_healthbar():
@@ -119,3 +137,8 @@ func set_zoom_level(value: float):
 
 func _on_EmissionTimer_timeout():
 	hit_particles.emitting = false
+
+
+func _on_PickupArea_area_entered(area):
+	if "Exp" in area.name:
+		area.go_to_player()

@@ -34,7 +34,7 @@ func _process(_delta):
 func attack():
 	var bodies = attack_area.get_overlapping_bodies()
 	for body in bodies:
-		if body.name.find("Enemy") >= 0:
+		if "Enemy" in body.name:
 			var impact_direction := Vector2(kinematic_force, 0.0)
 			if player.is_facing_left():
 				impact_direction = Vector2(-kinematic_force, 0.0)

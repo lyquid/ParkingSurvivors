@@ -2,14 +2,14 @@ extends Node
 
 class_name EnemiesManager
 
-const DEFAULT_SPAWN_TIME := 0.1
+const DEFAULT_SPAWN_TIME := 0.5
 const MAX_ENEMIES := 300
 
 onready var player := get_tree().root.get_node("Main/YSort/Player")
 onready var enemy_spawner := $EnemySpawner
 onready var spawn_timer := $SpawnTimer
 
-var starting_enemies := 12
+var starting_enemies := 10
 var enemies_count := 0
 # Enemies
 enum { BIZKY, SKELETON, ZOMBIE }

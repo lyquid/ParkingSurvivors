@@ -13,7 +13,7 @@ var direction := Vector2.ZERO
 var last_direction := Vector2(0.0, 1.0)
 var health: float
 var speed: float
-# damage
+# damage label
 const DAMAGE_LABEL_SHOW_TIMER := 0.3
 var impact_direction := Vector2.ZERO
 var stunned := false
@@ -27,6 +27,8 @@ onready var hit_animation := $HitAnimation
 onready var collision_shape := $CollisionShape2D
 onready var ia_timer := $IATimer
 onready var stun_timer := $StunTimer
+# xp gem
+var xp_scene := preload("res://items/experience/ExpGem.tscn")
 
 onready var player := get_tree().root.get_node("Main/YSort/Player")
 
@@ -85,6 +87,10 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 		hit_animation.play("death")
 		collision_shape.call_deferred("set_disabled", true)
 		emit_signal("death")
+		# xp gem
+		var xp_gem := xp_scene.instance()
+		xp_gem.position = position
+		get_parent().call_deferred("add_child", xp_gem)
 	# damage label
 	damage_label.text = damage_in as String
 	damage_label.visible = true
@@ -93,7 +99,7 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 		damage_label,
 		"rect_scale",
 		damage_label.rect_scale * 0.1,
-		damage_label.rect_scale * 1,
+		damage_label.rect_scale,
 		DAMAGE_LABEL_SHOW_TIMER,
 		Tween.TRANS_BOUNCE,
 		Tween.EASE_OUT

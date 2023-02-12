@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/graphics/playerGrey_walk1.png" type="Texture" id=2]
@@ -47,6 +47,9 @@ damping = 200.0
 damping_random = 0.2
 color = Color( 0.956863, 0.0784314, 0.0784314, 1 )
 
+[sub_resource type="CircleShape2D" id=6]
+radius = 128.0
+
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 script = ExtResource( 1 )
@@ -85,4 +88,11 @@ process_material = SubResource( 5 )
 [node name="EmissionTimer" type="Timer" parent="HitParticles"]
 wait_time = 0.2
 
+[node name="PickupArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource( 6 )
+
 [connection signal="timeout" from="HitParticles/EmissionTimer" to="." method="_on_EmissionTimer_timeout"]
+[connection signal="area_entered" from="PickupArea" to="." method="_on_PickupArea_area_entered"]
