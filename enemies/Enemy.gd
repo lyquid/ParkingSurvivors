@@ -28,7 +28,7 @@ onready var collision_shape := $CollisionShape2D
 onready var ia_timer := $IATimer
 onready var stun_timer := $StunTimer
 # xp gem
-var xp_scene := preload("res://items/experience/ExpGem.tscn")
+var xp_scene := preload("res://items/pickups/experience/ExpGem.tscn")
 
 onready var player := get_tree().root.get_node("Main/YSort/Player")
 

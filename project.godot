@@ -19,15 +19,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://enemies/Enemy.gd"
 }, {
-"base": "Area2D",
+"base": "PickUp",
 "class": "ExpGem",
 "language": "GDScript",
-"path": "res://items/experience/ExpGem.gd"
+"path": "res://items/pickups/experience/ExpGem.gd"
 }, {
 "base": "Node",
 "class": "LevelingManager",
 "language": "GDScript",
 "path": "res://LevelingManager.gd"
+}, {
+"base": "Area2D",
+"class": "PickUp",
+"language": "GDScript",
+"path": "res://items/pickups/PickUp.gd"
 }, {
 "base": "Node2D",
 "class": "Weapon",
@@ -44,6 +49,7 @@ _global_script_class_icons={
 "Enemy": "",
 "ExpGem": "",
 "LevelingManager": "",
+"PickUp": "",
 "Weapon": "",
 "WeaponsManager": ""
 }
