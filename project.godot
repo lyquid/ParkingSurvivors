@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Enemy",
+"class": "Bizky",
+"language": "GDScript",
+"path": "res://enemies/bizky/Bizky.gd"
+}, {
 "base": "Node",
 "class": "EnemiesManager",
 "language": "GDScript",
@@ -45,6 +50,7 @@ _global_script_classes=[ {
 "path": "res://weapons/WeaponsManager.gd"
 } ]
 _global_script_class_icons={
+"Bizky": "",
 "EnemiesManager": "",
 "Enemy": "",
 "ExpGem": "",

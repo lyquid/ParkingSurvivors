@@ -13,7 +13,7 @@ var starting_enemies := 10
 var enemies_count := 0
 # Enemies
 enum { BIZKY, SKELETON, ZOMBIE }
-var enemy_scene := preload("res://enemies/Enemy.tscn")
+var bizky_scene := preload("res://enemies/bizky/Bizky.tscn")
 
 
 func _ready():
@@ -28,7 +28,7 @@ func _ready():
 func instance_enemy(enemy_type):
 	var enemy: Enemy
 	if enemy_type == BIZKY:
-		enemy = enemy_scene.instance()
+		enemy = bizky_scene.instance()
 		assert(enemy)
 	else:
 		print("Wrong enemy")

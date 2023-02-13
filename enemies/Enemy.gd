@@ -4,10 +4,6 @@ class_name Enemy
 
 signal death
 
-const DEFAULT_SKELETON_SPEED := 20.0
-const DEFAULT_SKELETON_HEALTH := 2.0
-const DEFAULT_SKELETON_DAMAGE := 0.2
-
 var damage: float
 var direction := Vector2.ZERO
 var last_direction := Vector2(0.0, 1.0)
@@ -31,16 +27,6 @@ onready var stun_timer := $StunTimer
 var xp_scene := preload("res://items/pickups/experience/ExpGem.tscn")
 
 onready var player := get_tree().root.get_node("Main/YSort/Player")
-
-
-func _ready():
-	damage = DEFAULT_SKELETON_DAMAGE
-	health = DEFAULT_SKELETON_HEALTH
-	speed = DEFAULT_SKELETON_SPEED
-	damage_label.visible = false
-	damage_label_show_timer.wait_time = DAMAGE_LABEL_SHOW_TIMER
-	hit_animation.play("walk")
-	ia_timer.start()
 
 
 func _physics_process(delta):
