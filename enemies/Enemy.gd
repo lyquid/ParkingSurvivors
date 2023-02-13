@@ -48,7 +48,7 @@ func _physics_process(delta):
 	if stunned:
 		collision = move_and_collide(impact_direction * delta)
 	else:
-		move_and_slide(speed * direction)
+		direction = move_and_slide(speed * direction).normalized()
 		for i in get_slide_count():
 			collision = get_slide_collision(i)
 			if collision != null and collision.collider.name == "Player":
