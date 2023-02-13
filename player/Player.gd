@@ -75,14 +75,17 @@ func _process(delta):
 
 func add_experience(how_much: int):
 	experience += how_much
+	var residue := 0
 	if experience >= experience_until_new_level:
-		var residue := experience - experience_until_new_level
+		residue = experience - experience_until_new_level
 		level += 1
 		experience_until_new_level = leveling_manager.new_level(level)
-		experience = residue
-		print("level up: " + level as String + " xp until new level: " + experience_until_new_level as String)
+		experience = 0
+		print("LEVEL " + level as String + ", xp until new level: " + experience_until_new_level as String)
 
 	emit_signal("experience_changed", experience * 100.0 / experience_until_new_level)
+	if residue:
+		add_experience(residue)
 
 
 func update_healthbar():
