@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/basball bat.png-bc0e3697ebc6d7622a4bbfd9d2b9277c.stex"
+path="res://.import/sant_roc_px.png-80d579a59c6fa78d46e050e7d4e48b0d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://WIP_ART/basball bat.png"
-dest_files=[ "res://.import/basball bat.png-bc0e3697ebc6d7622a4bbfd9d2b9277c.stex" ]
+source_file="res://enemies/dragon/graphics/sant_roc_px.png"
+dest_files=[ "res://.import/sant_roc_px.png-80d579a59c6fa78d46e050e7d4e48b0d.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
