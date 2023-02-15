@@ -25,6 +25,8 @@ onready var ia_timer := $IATimer
 onready var stun_timer := $StunTimer
 # xp gem
 var xp_scene := preload("res://items/pickups/experience/ExpGem.tscn")
+# hit sound
+onready var hit_sound := $HitSound
 
 onready var player := get_tree().root.get_node("Main/YSort/Player")
 
@@ -91,6 +93,7 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 		Tween.EASE_OUT
 	)
 	damage_label_tween.start()
+	hit_sound.play()
 
 
 func _on_IATimer_timeout():
