@@ -9,11 +9,14 @@ onready var player := get_tree().root.get_node("Main/YSort/Player")
 onready var enemy_spawner := $EnemySpawner
 onready var spawn_timer := $SpawnTimer
 
+var rng := RandomNumberGenerator.new()
+
 var starting_enemies := 10
 var enemies_count := 0
 # Enemies
-enum { BIZKY, SKELETON, ZOMBIE }
+enum { BIZKY, ZOMBIE }
 var bizky_scene := preload("res://enemies/bizky/Bizky.tscn")
+var zombie_scene := preload("res://enemies/zombie/Zombie.tscn")
 
 
 func _ready():
@@ -21,7 +24,7 @@ func _ready():
 	spawn_timer.start()
 	# Create starting enemies
 	for _i in range(starting_enemies):
-		instance_enemy(BIZKY)
+		instance_enemy(rng.randi_range(0, 1))
 	enemies_count = starting_enemies
 
 
@@ -29,6 +32,9 @@ func instance_enemy(enemy_type):
 	var enemy: Enemy
 	if enemy_type == BIZKY:
 		enemy = bizky_scene.instance()
+		assert(enemy)
+	elif enemy_type == ZOMBIE:
+		enemy = zombie_scene.instance()
 		assert(enemy)
 	else:
 		print("Wrong enemy")
@@ -44,7 +50,7 @@ func instance_enemy(enemy_type):
 
 func _on_SpawnTimer_timeout():
 	if enemies_count < MAX_ENEMIES:
-		instance_enemy(BIZKY)
+		instance_enemy(rng.randi_range(0, 1))
 
 
 func _on_Enemy_death():

@@ -2,7 +2,7 @@ extends Weapon
 
 class_name Chain
 
-const DEFAULT_COOLDOWN_TIME := 0.1
+const DEFAULT_COOLDOWN_TIME := 4.0
 const DEFAULT_DAMAGE := 1
 const DEFAULT_KINEMATIC_FORCE := 25.0
 const DEFAULT_ATTACK_DURATION := 5.0

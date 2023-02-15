@@ -1,7 +1,28 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://enemies/Enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://enemies/bizky/Bizky.gd" type="Script" id=2]
+[ext_resource path="res://enemies/bizky/graphics/bizky_px.png" type="Texture" id=2]
+[ext_resource path="res://enemies/bizky/Bizky.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "stand",
+"speed": 5.0
+} ]
 
 [node name="Bizky" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( 1.5, 0 )
+
+[node name="AnimatedSprite" parent="." index="1"]
+frames = SubResource( 2 )
+
+[node name="DamageLabel" parent="DamageNode" index="0"]
+margin_left = -2.0
+margin_top = -26.0
+margin_right = 6.0
+margin_bottom = -16.0

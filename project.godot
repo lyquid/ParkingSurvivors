@@ -53,6 +53,11 @@ _global_script_classes=[ {
 "class": "WeaponsManager",
 "language": "GDScript",
 "path": "res://weapons/WeaponsManager.gd"
+}, {
+"base": "Enemy",
+"class": "Zombie",
+"language": "GDScript",
+"path": "res://enemies/zombie/Zombie.gd"
 } ]
 _global_script_class_icons={
 "Bizky": "",
@@ -63,7 +68,8 @@ _global_script_class_icons={
 "LevelingManager": "",
 "PickUp": "",
 "Weapon": "",
-"WeaponsManager": ""
+"WeaponsManager": "",
+"Zombie": ""
 }
 
 [application]

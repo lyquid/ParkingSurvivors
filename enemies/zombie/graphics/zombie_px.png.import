@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bizky_resized.png-11e4d5315bd1e24a7675bc36059a6fd6.stex"
+path="res://.import/zombie_px.png-801e600b1745e3daf0c7b41482fefe98.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/bizky/graphics/bizky_resized.png"
-dest_files=[ "res://.import/bizky_resized.png-11e4d5315bd1e24a7675bc36059a6fd6.stex" ]
+source_file="res://enemies/zombie/graphics/zombie_px.png"
+dest_files=[ "res://.import/zombie_px.png-801e600b1745e3daf0c7b41482fefe98.stex" ]
 
 [params]
 

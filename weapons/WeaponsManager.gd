@@ -9,9 +9,9 @@ var chain_scene := preload("res://weapons/chain/Chain.tscn")
 
 
 func _ready():
-#	var baseball_bat := baseball_bat_scene.instance()
-#	player.call_deferred("add_child", baseball_bat)
-#	var knife_launcher := knife_launcher_scene.instance()
-#	player.call_deferred("add_child", knife_launcher)
+	var baseball_bat := baseball_bat_scene.instance()
+	player.call_deferred("add_child", baseball_bat)
+	var knife_launcher := knife_launcher_scene.instance()
+	player.call_deferred("add_child", knife_launcher)
 	var chain := chain_scene.instance()
 	player.call_deferred("add_child", chain)
