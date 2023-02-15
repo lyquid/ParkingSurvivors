@@ -1,6 +1,6 @@
 extends Weapon
 
-const DISABLED_TIMEOUT := 1.5
+const DISABLED_TIMEOUT := 2.0
 
 var speed: float
 var direction: Vector2
@@ -21,11 +21,12 @@ func setup(damage_in: float, kinematic_force_in: float, speed_in: float, piercin
 	speed = speed_in
 	piercing_power = piercing
 	direction = direction_in
+	rotation = direction_in.angle()
 	return self
 
 
 func _process(delta):
-	position = position + speed * delta * direction
+	position += speed * delta * direction
 
 
 func _on_AttackArea_body_entered(body):

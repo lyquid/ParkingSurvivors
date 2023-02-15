@@ -1,24 +1,26 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://weapons/knife/Knife.gd" type="Script" id=1]
 
+[sub_resource type="StreamTexture" id=2]
+load_path = "res://.import/knife_px.png-6a060d721e3a054643233fd02e2d52fc.stex"
+
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 4 )
+extents = Vector2( 16, 1 )
 
 [node name="Knife" type="Node2D"]
+position = Vector2( 16, 0 )
 script = ExtResource( 1 )
 
-[node name="WeaponGraphics" type="ColorRect" parent="."]
-margin_right = 16.0
-margin_bottom = 8.0
-color = Color( 0.647059, 0.690196, 0.686275, 1 )
+[node name="WeaponGraphics" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+texture = SubResource( 2 )
 
 [node name="AttackArea" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 8, 4 )
 shape = SubResource( 1 )
 
 [node name="DisableTimer" type="Timer" parent="."]
