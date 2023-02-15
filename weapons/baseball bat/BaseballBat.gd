@@ -2,7 +2,7 @@ extends Weapon
 
 const DEFAULT_COOLDOWN_TIME := 1.0
 const DEFAULT_DAMAGE := 2.0
-const DEFAULT_KINEMATIC_FOCE := 25.0
+const DEFAULT_KINEMATIC_FORCE := 25.0
 const DEFAULT_ATTACK_LENGTH := 50.0
 
 var attack_length := DEFAULT_ATTACK_LENGTH
@@ -18,7 +18,7 @@ func _ready():
 	attack_area.set_transform(Transform2D(0.0, Vector2(attack_shape.shape.extents.x, 0.0)))
 	graphics.set_size(Vector2(attack_length * 2.0, 5.0))
 	damage = DEFAULT_DAMAGE
-	kinematic_force = DEFAULT_KINEMATIC_FOCE
+	kinematic_force = DEFAULT_KINEMATIC_FORCE
 	cooldown = DEFAULT_COOLDOWN_TIME
 	cooldown_timer.wait_time = cooldown
 	cooldown_timer.start()

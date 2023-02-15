@@ -94,8 +94,7 @@ func hit(damage_in: float, impact: Vector2 = Vector2.ZERO, stun: bool = false):
 
 
 func _on_IATimer_timeout():
-	var player_relative_position = player.position - position
-	direction = player_relative_position.normalized()
+	direction = (player.position - position).normalized()
 
 
 func _on_ShowTimer_timeout():

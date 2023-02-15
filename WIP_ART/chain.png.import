@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Turks_group_artwork_from_Final_Fantasy_VII.webp-d1e87affa71d14fc9dd02fa724bf5d54.stex"
+path="res://.import/chain.png-5113c16f06fb8e8a2f7897850e556abe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://WIP_ART/Turks_group_artwork_from_Final_Fantasy_VII.webp"
-dest_files=[ "res://.import/Turks_group_artwork_from_Final_Fantasy_VII.webp-d1e87affa71d14fc9dd02fa724bf5d54.stex" ]
+source_file="res://WIP_ART/chain.png"
+dest_files=[ "res://.import/chain.png-5113c16f06fb8e8a2f7897850e556abe.stex" ]
 
 [params]
 

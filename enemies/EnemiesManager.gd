@@ -2,7 +2,7 @@ extends Node
 
 class_name EnemiesManager
 
-const DEFAULT_SPAWN_TIME := 0.5
+const DEFAULT_SPAWN_TIME := 0.2
 const MAX_ENEMIES := 300
 
 onready var player := get_tree().root.get_node("Main/YSort/Player")

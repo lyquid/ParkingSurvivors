@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pxArt.png-705be8c96a59dd31dada8de5c1da6e46.stex"
+path="res://.import/chain_px.png-d4b8b1e51624b7aef75056ba9e0e5014.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/baseball bat/pxArt.png"
-dest_files=[ "res://.import/pxArt.png-705be8c96a59dd31dada8de5c1da6e46.stex" ]
+source_file="res://weapons/chain/graphics/chain_px.png"
+dest_files=[ "res://.import/chain_px.png-d4b8b1e51624b7aef75056ba9e0e5014.stex" ]
 
 [params]
 

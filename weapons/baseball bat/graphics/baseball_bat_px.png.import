@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Turks_group_artwork_from_Final_Fantasy_VII - copia.webp-63dae889d124883bb7b50974239b684f.stex"
+path="res://.import/baseball_bat_px.png-a2fc7389696ac48a00a8612576d2e5d1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://WIP_ART/Turks_group_artwork_from_Final_Fantasy_VII - copia.webp"
-dest_files=[ "res://.import/Turks_group_artwork_from_Final_Fantasy_VII - copia.webp-63dae889d124883bb7b50974239b684f.stex" ]
+source_file="res://weapons/baseball bat/graphics/baseball_bat_px.png"
+dest_files=[ "res://.import/baseball_bat_px.png-a2fc7389696ac48a00a8612576d2e5d1.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
