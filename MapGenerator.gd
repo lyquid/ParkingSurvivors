@@ -30,7 +30,7 @@ func _ready():
 	noise.period = period
 	noise.persistence = persistence
 	
-	var water_offset := 20
+	var water_offset := 20 # this should be a CONST
 	
 	# fill everything with water
 	for i in range(-size.y * 0.5 - water_offset, size.y * 0.5 + water_offset):

@@ -5,17 +5,15 @@ const DISABLED_TIMEOUT := 2.0
 var speed: float
 var direction: Vector2
 var piercing_power: float
-var tilemap: TileMap
 onready var graphics := $WeaponGraphics
 onready var disable_timer := $DisableTimer
 
 func _ready():
-	tilemap = get_tree().root.get_node("Main/MapGenerator/Terrain")
 	disable_timer.wait_time = DISABLED_TIMEOUT
 	disable_timer.start()
 
 
-func setup(damage_in: float, kinematic_force_in: float, speed_in: float, piercing: float, direction_in: Vector2) -> Node2D:
+func setup(damage_in: int, kinematic_force_in: float, speed_in: float, piercing: float, direction_in: Vector2) -> Node2D:
 	damage = damage_in
 	kinematic_force = kinematic_force_in
 	speed = speed_in
