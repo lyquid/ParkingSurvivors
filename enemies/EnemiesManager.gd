@@ -14,7 +14,8 @@ var rng := RandomNumberGenerator.new()
 var starting_enemies := 10
 var enemies_count := 0
 # Enemies
-enum { DRAGON, BIZKY, ZOMBIE }
+enum { DRAGON, CATEMAN, BIZKY, ZOMBIE }
+var cateman_scene := preload("res://enemies/cateman/Cateman.tscn")
 var dragon_scene := preload("res://enemies/dragon/Dragon.tscn")
 var bizky_scene := preload("res://enemies/bizky/Bizky.tscn")
 var zombie_scene := preload("res://enemies/zombie/Zombie.tscn")
@@ -25,13 +26,16 @@ func _ready():
 	spawn_timer.start()
 	# Create starting enemies, no dragon
 	for _i in range(starting_enemies):
-		instance_enemy(rng.randi_range(1, 2))
+		instance_enemy(rng.randi_range(1, 3))
 	enemies_count = starting_enemies
 
 
 func instance_enemy(enemy_type):
 	var enemy: Enemy
 	match enemy_type:
+		CATEMAN:
+			enemy = cateman_scene.instance()
+			assert(enemy)
 		DRAGON:
 			enemy = dragon_scene.instance()
 			assert(enemy)
@@ -59,7 +63,7 @@ func _on_SpawnTimer_timeout():
 		if spawn_dragon:
 			instance_enemy(DRAGON)
 		else:
-			instance_enemy(rng.randi_range(1, 2))
+			instance_enemy(rng.randi_range(1, 3))
 
 
 func _on_Enemy_death():
